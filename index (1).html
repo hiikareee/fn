@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>	</title>
+	<style type="text/css">
+		.sphere {
+			background-image: url('melon.png');
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border-radius: 100px;
+			transition: all 0.8s ease-out;
+			top: -150px;
+		}
+		.ground {
+			background: #2b3436;
+			position: absolute;
+			height: 50px;
+			top:  900px;
+		}
+		.rw {
+			margin: 0;
+			background: #2b3436;
+
+		}
+		.text {
+			font-size: x-large;
+			left: 600px;
+			top: 50px;
+			text-align: center;
+			color: #c9ba9d;
+		}
+	</style>
+</head>
+<body class="rw">
+<h5 class="score text">score: <span class="score">0</span></h5>
+
+<div class="ground">
+</div>
+
+<script type="text/javascript">
+
+	let score = 0;
+	let topSphere = 0;
+	let id = 0; 
+
+	let randomizer = function(arg){
+	    let random = Math.random() * arg;
+	    let round = Math.round(random)
+	    return round
+	}
+
+	for (let i=0; i<16; i=i+1) {
+		let div = document.createElement("div");
+		document.body.appendChild(div);
+		div.classList.add("sphere");
+		div.style.left = randomizer(1700) + "px";
+
+
+	}
+
+	let spheres = document.querySelectorAll(".sphere");
+	for(let i=0; i<spheres.length; i=i+1){
+		spheres[i].onclick = function(){
+			spheres[i].style.background = "red";
+			spheres[i].style.display = "none";
+			document.querySelector('.score').innerHTML = score;
+			score = score + 1;
+			topSphere = 1000;
+			if(score== 10){
+				alert("you win")
+				location.reload()
+			}
+		}
+			
+		if(randomizer(1)==0){
+			spheres[i].style.backgroundImage = "url(melon.png)";
+			spheres[i].style.backgroundSize = "100% 100%";
+		}
+		if(randomizer(2)==0){
+			spheres[i].style.backgroundImage = "url(watermelon.png)";
+			spheres[i].style.backgroundSize = "100% 100%";
+		}
+	}
+
+	let changeTop = function(){
+		topSphere = topSphere + 150;
+		spheres[id].style.top = topSphere + "px";
+
+		if (topSphere>=1000) {
+			topSphere = 0;
+			spheres[id].style.display = "none";
+			score = score - 1
+			document.querySelector('.score').innerHTML = score;
+			if(score== -3){
+				alert("you lose")
+				location.reload()
+			}
+			id = id + 1;
+			if (id==16) {
+				stop()
+			}
+		}
+	}
+	let Int = setInterval(changeTop, 300)
+	let stop = function() {
+		clearInterval(Int)
+	}
+
+
+
+	/*
+		цикл 10x = {
+			создать елемент див
+			добваить див в боди
+			добавить класс сфера
+			div.left = randomizer(900)
+		}
+		
+		spheres = document.querySelectorAll(.sphere)
+
+		цикл 10х {
+			spheres[i].onclick = {
+				div[i] display = "none";
+				topSphere = "1000";
+			}
+		}
+
+		let topSphere = 0;
+		let id = 0; 
+
+		let changeTop function() = {
+			topSphere = topSphere + 150;
+			spheres[id]. top = topSphere + px;
+
+			if(topSphere>=1000) {
+				topSphere = 0;
+				sphere[id] display = "none";
+				id = id + 1;
+				if(id==10){
+					
+				}
+			}
+		} 
+		
+		let Int = setInterval(changeTop, 300)
+
+		let stop function() {
+			clearInterval(Int)
+		}
+	*/
+</script>
+
+</body>
+</html>
